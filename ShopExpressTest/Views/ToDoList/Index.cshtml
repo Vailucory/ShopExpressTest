@@ -1,0 +1,49 @@
+﻿@{
+    @model List<ToDoItemReadViewModel>;
+}
+
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
+          <div-- class="card-body py-4 px-4 px-md-5">
+
+            <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
+              <i class="fas fa-check-square me-1"></i>
+              <u>My Todo-s</u>
+            </p>
+
+            @await Html.PartialAsync("Create", new ToDoItemCreateViewModel(""))
+
+            <hr class="my-4">
+                        @foreach (var task in Model)
+                        { 
+                            <ul class="list-group list-group-horizontal rounded-0 bg-transparent" id="af_@task.Id">
+                                @Html.AntiForgeryToken()
+                                <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
+                                    <div class="form-check">
+                                            <input class="form-check-input me-0 flexCheckChecked" type="checkbox" value="" id="@task.Id"
+                                               aria-label="..." asp-for="@task.IsCompleted" />
+                                    </div>
+                                </li>
+                                <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                                        <p class="lead fw-normal mb-0" id="ni_@task.Id">@task.Name</p>
+                                </li>
+                                <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
+                                    <div class="d-flex flex-row justify-content-end mb-1">
+                                            <a  class="text-info" data-mdb-toggle="tooltip" title="Edit todo" asp-action="Edit" asp-route-id="@task.Id">
+                                                <i class="fas fa-pencil-alt me-3" asp-action="Edit" ></i>
+                                        </a>
+                                            <a  class="text-danger" data-mdb-toggle="tooltip" title="Delete todo" asp-action="Delete" asp-route-id="@task.Id">
+                                            <i class="fas fa-trash-alt" ></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
